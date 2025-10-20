@@ -1,0 +1,43 @@
+DHCP from Server Lab Configuration
+
+# Router Configuration (acts as gateway only)
+enable
+configure terminal
+
+interface g0/1
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+
+end
+write memory
+
+# Switch Configuration
+enable
+configure terminal
+interface range fa0/1 - 3
+ no shutdown
+end
+write memory
+
+# Server Configuration (Packet Tracer Server0)
+# 1. Set static IP: 192.168.1.10/24
+# 2. Enable DHCP service with the following pool:
+#    Pool Name: OFFICE_POOL
+#    Default Gateway: 192.168.1.1
+#    DNS Server: 192.168.1.10
+#    Starting IP: 192.168.1.100
+#    Subnet Mask: 255.255.255.0
+#    Max Users: 50
+# 3. Enable DHCP
+
+# PC Configuration
+# 1. Set IP Configuration to DHCP
+# 2. Verify IP assignment:
+#    > ipconfig
+#    > ping 192.168.1.1
+#    > ping 192.168.1.10
+#    > ping other PCs
+
+# Verification Commands
+# Server0 → DHCP → Binding Table
+# PC → ipconfig
