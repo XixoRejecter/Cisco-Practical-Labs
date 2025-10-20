@@ -23,7 +23,4 @@ The labs are structured to guide you from **easy** to **advanced** topics:
 
 New labs will be added over time, so check back for updates regularly.
 
-## 💡 How to Use
-1. Clone this repository:
-```bash
-git clone https://github.com/<your-username>/cisco-networking-labs.git
+
