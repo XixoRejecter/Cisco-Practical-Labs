@@ -1,1 +1,78 @@
+===========================
+Router R0 Configuration
+=======================
+
+enable
+configure terminal
+hostname R0
+
+interface g0/0
+ip address 10.0.0.1 255.255.255.252
+no shutdown
+
+interface g0/1
+ip address 192.168.10.1 255.255.255.0
+no shutdown
+
+# Static route to R2 LAN through R1
+
+ip route 192.168.20.0 255.255.255.0 10.0.0.2
+
+end
+write memory
+
+===========================
+Router R1 Configuration
+=======================
+
+enable
+configure terminal
+hostname R1
+
+interface g0/0
+ip address 10.0.0.2 255.255.255.252
+no shutdown
+
+interface g0/1
+ip address 10.0.0.5 255.255.255.252
+no shutdown
+
+# Static routes
+
+ip route 192.168.10.0 255.255.255.0 10.0.0.1
+ip route 192.168.20.0 255.255.255.0 10.0.0.6
+
+end
+write memory
+
+===========================
+Router R2 Configuration
+=======================
+
+enable
+configure terminal
+hostname R2
+
+interface g0/1
+ip address 10.0.0.6 255.255.255.252
+no shutdown
+
+interface g0/0
+ip address 192.168.20.1 255.255.255.0
+no shutdown
+
+# Static route to R0 LAN through R1
+
+ip route 192.168.10.0 255.255.255.0 10.0.0.5
+
+end
+write memory
+
+===========================
+PC0 Configuration
+=================
+
+IP Address: 192.168.20.10
+Subnet Mask: 255.255.255.0
+Default Gateway: 192.168.20.1
 
