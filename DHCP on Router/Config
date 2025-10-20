@@ -1,0 +1,27 @@
+Router0 DHCP Configuration
+
+# Enter privileged mode
+enable
+
+# Enter global configuration
+configure terminal
+
+# Exclude router IP and any static IPs from the DHCP pool
+ip dhcp excluded-address 192.168.1.1 192.168.1.10
+
+# Create DHCP pool named LAN_POOL
+ip dhcp pool LAN_POOL
+ network 192.168.1.0 255.255.255.0
+ default-router 192.168.1.1
+ dns-server 192.168.1.1
+ lease 7
+
+# End configuration mode
+end
+
+# Save configuration
+write memory
+
+# Optional verification commands
+show ip dhcp binding
+show ip dhcp pool
