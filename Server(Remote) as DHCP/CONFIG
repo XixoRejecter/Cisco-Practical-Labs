@@ -1,0 +1,57 @@
+DHCP from Server in Another LAN - Configuration
+
+# Router Configuration
+enable
+configure terminal
+
+interface g0/0
+ description SERVER_LAN
+ ip address 192.168.20.1 255.255.255.0
+ no shutdown
+
+interface g0/1
+ description CLIENT_LAN
+ ip address 192.168.10.1 255.255.255.0
+ ip helper-address 192.168.20.10
+ no shutdown
+
+end
+write memory
+
+
+# Server Configuration (in Packet Tracer GUI)
+# --------------------------------------------
+# Static IP: 192.168.20.10 / 255.255.255.0
+# Default Gateway: 192.168.20.1
+# DHCP Service: ON
+# DHCP Pool:
+#   Pool Name: REMOTE_CLIENTS
+#   Network: 192.168.10.0
+#   Subnet Mask: 255.255.255.0
+#   Default Gateway: 192.168.10.1
+#   DNS Server: 192.168.20.10
+#   Starting IP: 192.168.10.100
+#   Max Users: 50
+
+
+
+
+# PC Configuration
+# ----------------
+# IP Configuration: DHCP
+# Verify:
+#   PC> ipconfig
+#   PC> ping 192.168.10.1
+#   PC> ping 192.168.20.10
+
+
+# Verification Commands
+# ---------------------
+# Router:
+#   show ip interface brief
+#   show running-config | section interface
+# Server:
+#   Check DHCP > Binding Table
+# PC:
+#   ipconfig
+#   ping gateway and server
