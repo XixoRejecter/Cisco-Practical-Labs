@@ -1,0 +1,46 @@
+DNS and Web Server Integration - Configuration Commands
+
+# Router Configuration
+enable
+configure terminal
+!
+interface g0/0
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+!
+end
+write memory
+
+
+# Server Configuration (via Packet Tracer GUI)
+# 1. Assign static IP:
+#    IP Address: 192.168.1.10
+#    Subnet Mask: 255.255.255.0
+#    Default Gateway: 192.168.1.1
+#
+# 2. Enable DNS service:
+#    - Turn DNS ON
+#    - Add record:
+#         Name: www.company.local
+#         Address: 192.168.1.10
+#
+# 3. Enable HTTP service:
+#    - Turn HTTP ON
+#    - (Optional) Edit default page:
+#         <h1>Welcome to Company Local Website!</h1>
+
+
+# PC Configuration
+# 1. Assign static IP:
+#    IP Address: 192.168.1.20
+#    Subnet Mask: 255.255.255.0
+#    Default Gateway: 192.168.1.1
+#    DNS Server: 192.168.1.10
+#
+# 2. Test Connectivity:
+#    PC> ping 192.168.1.10
+#    PC> ping www.company.local
+#    PC> nslookup www.company.local
+#
+# 3. Web Test:
+#    Open PC0's Web Browser → URL: http://www.company.local
