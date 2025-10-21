@@ -1,0 +1,56 @@
+DNS and Web Server Integration Lab
+
+Objective:
+-------------
+Demonstrate how DNS and Web servers work together to allow name-based access in a local network.
+
+Topology:
+-------------
+[Router0] G0/0: 192.168.1.1
+   |
+[Switch0]
+  |       \
+[PC0]     [Server0]
+
+Device Roles:
+- Router0: Default gateway (192.168.1.1)
+- Server0: DNS + HTTP Server (192.168.1.10)
+- PC0: Client (192.168.1.20, uses DNS)
+
+How It Works:
+-------------
+1. PC0 tries to access a web page using a domain name (e.g., www.company.local).
+2. PC0 sends a DNS request to Server0.
+3. Server0 resolves the hostname to the IP address 192.168.1.10.
+4. PC0 then connects to Server0’s HTTP service using the resolved IP.
+5. The web page hosted on Server0 is displayed in PC0’s browser.
+
+Configuration Summary:
+-------------
+- Router0: IP 192.168.1.1 on G0/0
+- Server0: IP 192.168.1.10, DNS + HTTP enabled
+- PC0: IP 192.168.1.20, DNS server = 192.168.1.10
+
+Server DNS Configuration:
+- Domain name: www.company.local
+- Mapped IP: 192.168.1.10
+
+Testing Procedure:
+-------------
+1. On PC0, open the web browser and go to:
+   http://www.company.local
+
+2. From PC0 command prompt:
+   > ping www.company.local
+   > nslookup www.company.local
+
+Expected Results:
+-------------
+- DNS resolves www.company.local → 192.168.1.10
+- Ping succeeds
+- Web page loads from Server0 showing the company welcome message
+
+Verification:
+-------------
+- On Server0 → DNS → Records → verify A record
+- On PC0 → check DNS settings and ping results
