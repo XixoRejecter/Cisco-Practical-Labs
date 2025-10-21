@@ -1,1 +1,65 @@
+# Router0 Configuration (NAT/PAT)
+enable
+configure terminal
+
+interface gigabitEthernet0/0
+ ip address 192.168.10.1 255.255.255.0
+ ip nat inside
+ no shutdown
+
+interface gigabitEthernet0/1
+ ip address 203.0.113.2 255.255.255.0
+ ip nat outside
+ no shutdown
+
+access-list 1 permit 192.168.10.0 0.0.0.255
+ip nat inside source list 1 interface gigabitEthernet0/1 overload
+
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+
+end
+write memory
+
+# Router1 (ISP) Configuration
+enable
+configure terminal
+
+interface gigabitEthernet0/1
+ ip address 203.0.113.1 255.255.255.0
+ no shutdown
+
+interface gigabitEthernet0/0
+ ip address 203.0.114.1 255.255.255.0
+ no shutdown
+
+ip route 192.168.10.0 255.255.255.0 203.0.113.2
+
+end
+write memory
+
+# Server0 (DNS)
+IP Address: 203.0.114.10
+Subnet Mask: 255.255.255.0
+Default Gateway: 203.0.114.1
+DNS Service: ON
+DNS Record: www.company.local → 203.0.114.10
+HTTP Service: OFF (optional)
+
+# PC0 (LAN Client)
+IP Address: 192.168.10.10
+Subnet Mask: 255.255.255.0
+Default Gateway: 192.168.10.1
+DNS Server: 203.0.114.10
+
+# PC1 (LAN Client)
+IP Address: 192.168.10.20
+Subnet Mask: 255.255.255.0
+Default Gateway: 192.168.10.1
+DNS Server: 203.0.114.10
+
+# Testing Commands
+PC> ping www.company.local
+PC> nslookup www.company.local
+Router0> show ip nat translations
+Router0> show ip nat statistics
 
