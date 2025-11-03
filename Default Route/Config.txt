@@ -1,0 +1,48 @@
+#############################################
+# Router0 (Branch)
+#############################################
+enable
+configure terminal
+
+interface gig0/0
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+
+interface gig0/1
+ ip address 10.10.10.1 255.255.255.0
+ no shutdown
+
+! Default route toward ISP
+ip route 0.0.0.0 0.0.0.0 10.10.10.2
+
+end
+write memory
+
+
+#############################################
+# Router1 (ISP)
+#############################################
+enable
+configure terminal
+
+interface gig0/0
+ ip address 10.10.10.2 255.255.255.0
+ no shutdown
+
+interface gig0/1
+ ip address 203.0.113.1 255.255.255.0
+ no shutdown
+
+! Route back to branch LAN
+ip route 192.168.1.0 255.255.255.0 10.10.10.1
+
+end
+write memory
+
+
+#############################################
+# PC0 Configuration
+#############################################
+IP Address: 192.168.1.10
+Subnet Mask: 255.255.255.0
+Default Gateway: 192.168.1.1
